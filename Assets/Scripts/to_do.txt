@@ -4,6 +4,6 @@ Better Materials
 King Sculpture
 
 1. Draw from deck.
-2. Intanciate the two tile blocks, one head one follow, and a tranform to move
+2. Instanciate the two tile blocks, one head one follow, and a tranform to move
 3. Move the tiles on whole number grid axis - Controlls
 4. "Try" to place it down

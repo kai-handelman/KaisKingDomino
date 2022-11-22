@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public void deckHelper(){
         tileDeck = new Deck();
         List <(int,(tileType,int), (tileType, int))> newDraw = tileDeck.getNext(4);
-
+        
     }
     //add transforms for where they going to display 
     //let the players choose their pick
@@ -37,11 +37,20 @@ public class GameManager : MonoBehaviour
 
 
     public void playerHelper(){
-        
+        tileDeck = new Deck();
         
         addPlayer(1);
-        playerList[0].GetComponent<Spawner>().spawnTile(0,0,0,obj);
-        playerList[0].GetComponent<playerScript>().placeBlock(new Tile(tileType.Fields,0,1,5),new Tile(tileType.Fields,0,2,5));
+        playerList[0].GetComponent<Spawner>().spawnTile(0,0,0,obj);         //Spawns Middle Piece
+        List <(int,(tileType,int), (tileType, int))> t = tileDeck.getNext(1); //Single Card activated
+        
+        
+        
+        
+        // playerList[0].GetComponent<playerScript>().placeBlock(new Tile(tileType.Fields,0,1,5),new Tile(tileType.Fields,0,2,5));
+        
+        
+        
+        
         // placeBlock(playerList[0].GetComponent<BoardManager>(),new Tile(tileType.Fields,0,1,5),new Tile(tileType.Fields,0,2,5));
         // placeBlock(players[0],new Tile(tileType.Fields,0,3,5),new Tile(tileType.Fields,0,4,5));
         // placeBlock(players[0],new Tile(tileType.Fields,1,4,5),new Tile(tileType.Fields,2,4,5));
