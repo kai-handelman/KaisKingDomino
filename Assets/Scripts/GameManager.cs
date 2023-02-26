@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using tileNamespace;
 using boardNameSpace;
+using tileNamespace;
+using UnityEngine;
 
 
 public class GameManager : MonoBehaviour
@@ -13,54 +13,62 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     private GameObject[] playerList;
     BoardManager temp;
+
     void Start()
     {
         // deckHelper();  
-        playerHelper();
+        playerHelper(1);
     }
 
-    public void deckHelper(){
+    public void deckHelper()
+    {
+
         tileDeck = new Deck();
-        List <(int,(tileType,int), (tileType, int))> newDraw = tileDeck.getNext(4);
-        
+        List<Card> newDraw = tileDeck.getNext(4);
+
     }
     //add transforms for where they going to display 
     //let the players choose their pick
     //have the players the selected tile on their board 
     //then place it on their own board
 
-    public void spawnTiles(List <(int,(tileType,int), (tileType, int))> nD){
-        foreach((int,(tileType,int), (tileType, int)) s in nD){
-            
+    public void spawnTiles(List<(int, (tileType, int), (tileType, int))> nD)
+    {
+        foreach ((int, (tileType, int), (tileType, int)) s in nD)
+        {
+
         }
     }
 
 
-    public void playerHelper(){
+    public void playerHelper(int playerCount)
+    {
         tileDeck = new Deck();
-        
-        addPlayer(1);
-        playerList[0].GetComponent<Spawner>().spawnTile(0,0,0,obj);         //Spawns Middle Piece
-        List <(int,(tileType,int), (tileType, int))> t = tileDeck.getNext(1); //Single Card activated
-        
-        
-        
-        
+        instantiatePlayers(playerCount);
+
+        playerList[0].GetComponent<Spawner>().spawnTile(0, 0, 0, obj);         //Spawns Middle Piece
+        // List<Card> t = tileDeck.getNext(1); //Single Card activated
+
+
+
+
         // playerList[0].GetComponent<playerScript>().placeBlock(new Tile(tileType.Fields,0,1,5),new Tile(tileType.Fields,0,2,5));
-        
-        
-        
-        
+
+
+
+
         // placeBlock(playerList[0].GetComponent<BoardManager>(),new Tile(tileType.Fields,0,1,5),new Tile(tileType.Fields,0,2,5));
         // placeBlock(players[0],new Tile(tileType.Fields,0,3,5),new Tile(tileType.Fields,0,4,5));
         // placeBlock(players[0],new Tile(tileType.Fields,1,4,5),new Tile(tileType.Fields,2,4,5));
         // placeBlock(players[0],new Tile(tileType.Fields,-1,4,5),new Tile(tileType.Fields,-1,5,5));
     }
-    
-    public void addPlayer(int num){
+
+    public void instantiatePlayers(int num)
+    {
         playerList = new GameObject[num];
-        for(int i = 0; i<num; i++){
-            playerList[i] = Instantiate(playerPrefab, new Vector3(0,0,0),Quaternion.identity);
+        for (int i = 0; i < num; i++)
+        {
+            playerList[i] = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         }
     }
 

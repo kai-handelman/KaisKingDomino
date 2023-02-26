@@ -1,0 +1,530 @@
+[
+    {
+        "cardNum": 1,
+        "anchor": {
+            "type": "Field",
+            "value": 0
+        },
+        "secondary": {
+            "type": 1,
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 2,
+        "anchor": {
+            "type": "Field",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Field",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 3,
+        "anchor": {
+            "type": "Forest",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Forest",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 4,
+        "anchor": {
+            "type": "Forest",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Forest",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 5,
+        "anchor": {
+            "type": "Forest",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Forest",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 6,
+        "anchor": {
+            "type": "Forest",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Forest",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 7,
+        "anchor": {
+            "type": "Ocean",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Ocean",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 8,
+        "anchor": {
+            "type": "Ocean",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Ocean",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 9,
+        "anchor": {
+            "type": "Ocean",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Ocean",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 10,
+        "anchor": {
+            "type": "Grassland",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Grassland",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 11,
+        "anchor": {
+            "type": "Grassland",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Grassland",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 12,
+        "anchor": {
+            "type": "Swamp",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Swamp",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 13,
+        "anchor": {
+            "type": "Field",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Forest",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 14,
+        "anchor": {
+            "type": "Field",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Ocean",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 15,
+        "anchor": {
+            "type": "Field",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Grassland",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 16,
+        "anchor": {
+            "type": "Field",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Swamp",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 17,
+        "anchor": {
+            "type": "Forest",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Ocean",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 18,
+        "anchor": {
+            "type": "Forest",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Grassland",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 19,
+        "anchor": {
+            "type": "Field",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Forest",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 20,
+        "anchor": {
+            "type": "Field",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Ocean",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 21,
+        "anchor": {
+            "type": "Field",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Grassland",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 22,
+        "anchor": {
+            "type": "Field",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Swamp",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 23,
+        "anchor": {
+            "type": "Field",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Mines",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 24,
+        "anchor": {
+            "type": "Forest",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Field",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 25,
+        "anchor": {
+            "type": "Forest",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Field",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 26,
+        "anchor": {
+            "type": "Forest",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Field",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 27,
+        "anchor": {
+            "type": "Forest",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Field",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 28,
+        "anchor": {
+            "type": "Forest",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Ocean",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 29,
+        "anchor": {
+            "type": "Forest",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Grassland",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 30,
+        "anchor": {
+            "type": "Ocean",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Field",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 31,
+        "anchor": {
+            "type": "Ocean",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Field",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 32,
+        "anchor": {
+            "type": "Ocean",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Forest",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 33,
+        "anchor": {
+            "type": "Ocean",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Forest",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 34,
+        "anchor": {
+            "type": "Ocean",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Forest",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 35,
+        "anchor": {
+            "type": "Ocean",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Forest",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 36,
+        "anchor": {
+            "type": "Field",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Grassland",
+            "value": 1
+        }
+    },
+    {
+        "cardNum": 37,
+        "anchor": {
+            "type": "Ocean",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Grassland",
+            "value": 1
+        }
+    },
+    {
+        "cardNum": 38,
+        "anchor": {
+            "type": "Field",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Swamp",
+            "value": 1
+        }
+    },
+    {
+        "cardNum": 39,
+        "anchor": {
+            "type": "Grassland",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Swamp",
+            "value": 1
+        }
+    },
+    {
+        "cardNum": 40,
+        "anchor": {
+            "type": "Mines",
+            "value": 1
+        },
+        "secondary": {
+            "type": "Field",
+            "value": 1
+        }
+    },
+    {
+        "cardNum": 41,
+        "anchor": {
+            "type": "Field",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Grassland",
+            "value": 2
+        }
+    },
+    {
+        "cardNum": 42,
+        "anchor": {
+            "type": "Ocean",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Grassland",
+            "value": 2
+        }
+    },
+    {
+        "cardNum": 43,
+        "anchor": {
+            "type": "Field",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Swamp",
+            "value": 2
+        }
+    },
+    {
+        "cardNum": 44,
+        "anchor": {
+            "type": "Grassland",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Swamp",
+            "value": 2
+        }
+    },
+    {
+        "cardNum": 45,
+        "anchor": {
+            "type": "Mines",
+            "value": 2
+        },
+        "secondary": {
+            "type": "Field",
+            "value": 0
+        }
+    },
+    {
+        "cardNum": 46,
+        "anchor": {
+            "type": "Swamp",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Mines",
+            "value": 2
+        }
+    },
+    {
+        "cardNum": 47,
+        "anchor": {
+            "type": "Swamp",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Mines",
+            "value": 2
+        }
+    },
+    {
+        "cardNum": 48,
+        "anchor": {
+            "type": "Field",
+            "value": 0
+        },
+        "secondary": {
+            "type": "Mines",
+            "value": 3
+        }
+    }
+]

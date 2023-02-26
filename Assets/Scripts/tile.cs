@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 
@@ -16,13 +17,15 @@ namespace tileNamespace
         Mines   //6
     }
 
-    public class ActiveTile
-    {
-        private int indexNumber;
-        private (tileType, int) anchorTile;
-        private (tileType, int) secondaryTile;
+    [System.Serializable]
+    public class Card
+    {   //For Use before a block is placed
+        public int cardNum { get; set; }
+        public (string type, int value) anchor { get; set; }
+        public (string type, int value) secondary { get; set; }
 
     }
+
     public class Tile
     {
         private int xCoord;
@@ -53,85 +56,41 @@ namespace tileNamespace
 
     public class Deck
     {
-        private List<(int, (tileType, int), (tileType, int))> deckCards = new List<(int, (tileType, int), (tileType, int))>();
+        const string fileName = "Assets/Scripts/deck.json";
+        private List<Card> deckOfCards;
+
+        //Put this into a json so it not horrendus
         public Deck()
         {
-            deckCards.Add((1, (tileType.Fields, 0), (tileType.Fields, 0)));
-            deckCards.Add((2, (tileType.Fields, 0), (tileType.Fields, 0)));
-            deckCards.Add((3, (tileType.Forest, 0), (tileType.Forest, 0)));
-            deckCards.Add((4, (tileType.Forest, 0), (tileType.Forest, 0)));
-            deckCards.Add((5, (tileType.Forest, 0), (tileType.Forest, 0)));
-            deckCards.Add((6, (tileType.Forest, 0), (tileType.Forest, 0)));
-            deckCards.Add((7, (tileType.Ocean, 0), (tileType.Ocean, 0)));
-            deckCards.Add((8, (tileType.Ocean, 0), (tileType.Ocean, 0)));
-            deckCards.Add((9, (tileType.Ocean, 0), (tileType.Ocean, 0)));
-            deckCards.Add((10, (tileType.GrassLands, 0), (tileType.GrassLands, 0)));
-            deckCards.Add((11, (tileType.GrassLands, 0), (tileType.GrassLands, 0)));
-            deckCards.Add((12, (tileType.Swamp, 0), (tileType.Swamp, 0)));
-            deckCards.Add((13, (tileType.Fields, 0), (tileType.Forest, 0)));
-            deckCards.Add((14, (tileType.Fields, 0), (tileType.Ocean, 0)));
-            deckCards.Add((15, (tileType.Fields, 0), (tileType.GrassLands, 0)));
-            deckCards.Add((16, (tileType.Fields, 0), (tileType.Swamp, 0)));
-            deckCards.Add((17, (tileType.Forest, 0), (tileType.Ocean, 0)));
-            deckCards.Add((18, (tileType.Forest, 0), (tileType.GrassLands, 0)));
-            deckCards.Add((19, (tileType.Fields, 1), (tileType.Forest, 0)));
-            deckCards.Add((20, (tileType.Fields, 1), (tileType.Ocean, 0)));
-            deckCards.Add((21, (tileType.Fields, 1), (tileType.GrassLands, 0)));
-            deckCards.Add((22, (tileType.Fields, 1), (tileType.Swamp, 0)));
-            deckCards.Add((23, (tileType.Fields, 1), (tileType.Mines, 0)));
-            deckCards.Add((24, (tileType.Forest, 1), (tileType.Fields, 0)));
-            deckCards.Add((25, (tileType.Forest, 1), (tileType.Fields, 0)));
-            deckCards.Add((26, (tileType.Forest, 1), (tileType.Fields, 0)));
-            deckCards.Add((27, (tileType.Forest, 1), (tileType.Fields, 0)));
-            deckCards.Add((28, (tileType.Forest, 1), (tileType.Ocean, 0)));
-            deckCards.Add((29, (tileType.Forest, 1), (tileType.GrassLands, 0)));
-            deckCards.Add((30, (tileType.Ocean, 1), (tileType.Fields, 0)));
-            deckCards.Add((31, (tileType.Ocean, 1), (tileType.Fields, 0)));
-            deckCards.Add((32, (tileType.Ocean, 1), (tileType.Forest, 0)));
-            deckCards.Add((33, (tileType.Ocean, 1), (tileType.Forest, 0)));
-            deckCards.Add((34, (tileType.Ocean, 1), (tileType.Forest, 0)));
-            deckCards.Add((35, (tileType.Ocean, 1), (tileType.Forest, 0)));
-            deckCards.Add((36, (tileType.Fields, 0), (tileType.GrassLands, 1)));
-            deckCards.Add((37, (tileType.Ocean, 0), (tileType.GrassLands, 1)));
-            deckCards.Add((38, (tileType.Fields, 0), (tileType.Swamp, 1)));
-            deckCards.Add((39, (tileType.GrassLands, 0), (tileType.Swamp, 1)));
-            deckCards.Add((40, (tileType.Mines, 1), (tileType.Fields, 0)));
-            deckCards.Add((41, (tileType.Fields, 0), (tileType.GrassLands, 2)));
-            deckCards.Add((42, (tileType.Ocean, 0), (tileType.GrassLands, 2)));
-            deckCards.Add((43, (tileType.Fields, 0), (tileType.Swamp, 2)));
-            deckCards.Add((44, (tileType.GrassLands, 0), (tileType.Swamp, 2)));
-            deckCards.Add((45, (tileType.Mines, 2), (tileType.Fields, 0)));
-            deckCards.Add((46, (tileType.Swamp, 0), (tileType.Mines, 2)));
-            deckCards.Add((47, (tileType.Swamp, 0), (tileType.Mines, 2)));
-            deckCards.Add((48, (tileType.Fields, 0), (tileType.Mines, 3)));
+            string jsonString = System.IO.File.ReadAllText(fileName);
+            deckOfCards = JsonConvert.DeserializeObject<List<Card>>(jsonString);
+            Debug.Log(deckOfCards.Count);
         }
 
-        public List<(int, (tileType, int), (tileType, int))> getNext(int drawCount)
-        {               //Draws the next card 
-                        //Input how cards are drawn per turn (For the # of Players)
-            List<(int, (tileType, int), (tileType, int))> drawCards = new List<(int, (tileType, int), (tileType, int))>();
-            (int, (tileType, int), (tileType, int)) temp;
+
+        //Input how cards are drawn per turn (For the # of Players)
+        public List<Card> getNext(int drawCount)
+        {
+            List<Card> drawCards = new List<Card>();
+            Card temp;
             for (int i = 0; i < drawCount; i++)
             {                                                 //Randomly selects cards from deck to a the current turn's deck
-                temp = deckCards[Random.Range(0, deckCards.Count)];
+                temp = deckOfCards[Random.Range(0, deckOfCards.Count)];
                 drawCards.Add(temp);
-                deckCards.Remove(temp);
-            }
-            drawCards.Sort();                                                                   //Sorts the temp deck out to least to greatest
-            foreach ((int, (tileType, int), (tileType, int)) da in drawCards)
-            {
-                Debug.Log(da.Item1);
+                deckOfCards.Remove(temp);
             }
 
-            //Restructure deck so it is order, so index is 0 through draw count - Probably not needed
-            // for(int i = 0; i < drawCount; i++){                                                
-            //     drawCards[i] = (i,drawCards[i].Item2,drawCards[i].Item3);
-            // }
-            return drawCards;                                                                  //Returns Current turn deck of 0 - draw count
+            drawCards.Sort();                                //Sorts the temp deck out to least to greatest
+            foreach (Card da in drawCards)
+            {
+                Debug.Log(da.cardNum);
+            }
+
+            return drawCards;
         }
         public int getCount()
         {                                                                  //See how many cards are left in the deck
-            return deckCards.Count;
+            return deckOfCards.Count;
         }
 
 
@@ -141,7 +100,7 @@ namespace tileNamespace
         /**
         // public int getCertainCount(int t){
         //     int count = 0;
-        //     foreach((int,(tileType,int),(tileType,int)) i in deckCards){
+        //     foreach((int,(tileType,int),(tileType,int)) i in deckOfCards){
         //         if((int)i.Item2.Item1 == t){
         //             count++;
         //             if(i.Item2.Item2 == 1){
@@ -160,7 +119,7 @@ namespace tileNamespace
         // }
         // public int getCertainCountV(int t,int v){
         //     int count = 0;
-        //     foreach((int,(tileType,int),(tileType,int)) i in deckCards){
+        //     foreach((int,(tileType,int),(tileType,int)) i in deckOfCards){
         //         if((int)i.Item2.Item1 == t && i.Item2.Item2 == v){
         //             count++;
         //         }
