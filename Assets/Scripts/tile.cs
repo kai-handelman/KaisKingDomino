@@ -81,10 +81,10 @@ namespace tileNamespace
             }
 
             drawCards.Sort();                                //Sorts the temp deck out to least to greatest
-            foreach (Card da in drawCards)
-            {
-                Debug.Log(da.cardNum);
-            }
+            // foreach (Card da in drawCards)
+            // {
+            //     Debug.Log(da.cardNum);
+            // }
 
             return drawCards;
         }

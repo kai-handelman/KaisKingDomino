@@ -1,52 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using tileNamespace;
 using UnityEngine;
 
 namespace boardNameSpace
 {
-    public class BoardManager : MonoBehaviour
+    public class BoardManager
     {
         private int playerNum;
         private (int, int) xValues;
         private (int, int) yValues;
         private bool xCap;
         private bool yCap;
-        private List<Tile> tiles = new List<Tile>();
-        private GameObject objToSpawn;
+        // private List<Tile> tiles = new List<Tile>();
+        // private GameObject objToSpawn;
         private int boardSize;
+        private Dictionary<(int, int), Tile> occupiedSpaces;
 
-        // public BoardManager(int pN,int bS,GameObject item){
-        //     playerNum = pN;
-        //     objToSpawn = item;
-        //     Tile kingTile = new Tile(tileType.King,0,0,5);
-        //     xValues = (0,0);
-        //     yValues = (0,0);
-        //     xCap = false;
-        //     yCap = false;
-        //     boardSize = bS - 1;
-        //     tiles.Add(kingTile);
-        // }
-
-        void Awake()
+        public BoardManager()
         {
             Tile kingTile = new Tile(tileType.King, 0, 0, 5);
             xValues = (0, 0);
             yValues = (0, 0);
             xCap = false;
             yCap = false;
-            tiles.Add(kingTile);
+            occupiedSpaces.Add(kingTile.getCoords(), kingTile);
             boardSize = 5;
         }
 
         public bool addTile(Tile t1, Tile t2)
         {//Will return place tile add to list if everything is valid
-            if (coordsInbounds(t1.getCoords(), t2.getCoords()) && isValidPlace(t1.getType(), t2.getType(), t1.getCoords(), t2.getCoords()))
+            if (isValidPlace(t1.getType(), t2.getType(), t1.getCoords(), t2.getCoords()))
             {
                 updateBounds(t1.getCoords());
-                tiles.Add(t1);
+                occupiedSpaces.Add(t1.getCoords(), t1);
                 updateBounds(t2.getCoords());
-                tiles.Add(t2);
+                occupiedSpaces.Add(t2.getCoords(), t2);
                 return true;
             }
             return false;
@@ -54,64 +44,61 @@ namespace boardNameSpace
 
         public bool isValidPlace(tileType anchorTileType, tileType secondaryTileType, (int, int) anchCoord, (int, int) secondCoor)
         {
-            Dictionary<(int, int), tileType> occupiedSpaces = getOccSpaces();
+            //Checks if the anchCoord or secondCoord will be out of bounds
+            if (coordsInbounds(anchCoord, secondCoor))
+            {
+                //Coords weren't in bound
+                return false;
+            }
+
 
             if (occupiedSpaces.ContainsKey(anchCoord) || occupiedSpaces.ContainsKey(secondCoor))
             {
-                return false;         //False forr Overlaping
+                return false;         //There is no possible match
             }
 
-            //Check if the anchCoord or secondCoord will be out of bounds
-
-
-            if (!matchingNeighbors(occupiedSpaces, anchCoord, anchorTileType))
+            if (!matchingNeighbors(anchCoord, anchorTileType))
             {
                 return false;         //There were no neighbors for anchor
             }
 
-            if (!matchingNeighbors(occupiedSpaces, secondCoor, secondaryTileType))
+            if (!matchingNeighbors(secondCoor, secondaryTileType))
             {
                 return false;         //There were no neighbors for secondary
             }
 
-            return true;
-            //Add then and update bounds
 
+            //Update bounds
+            updateBounds(anchCoord);
+            updateBounds(secondCoor);
+            //Add Tile
+            return true;
         }
 
-        public bool matchingNeighbors(Dictionary<(int, int), tileType> occupiedSpaces, (int, int) target, tileType tt)
+        public bool matchingNeighbors((int, int) target, tileType tt)
         {
+            //Checks if any of the surrounding squares of the target of the tile is occupied and has the same type
             (int, int) tempTarget = (target.Item1 + 1, target.Item2);
-            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[target] == tt)
+            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[target].getType() == tt)
             {
                 return true;
             }
             tempTarget = (target.Item1 - 1, target.Item2);
-            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[target] == tt)
+            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[target].getType() == tt)
             {
                 return true;
             }
             tempTarget = (target.Item1, target.Item2 + 1);
-            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[target] == tt)
+            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[target].getType() == tt)
             {
                 return true;
             }
             tempTarget = (target.Item1, target.Item2 - 1);
-            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[target] == tt)
+            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[target].getType() == tt)
             {
                 return true;
             }
             return false;
-        }
-
-        private Dictionary<(int, int), tileType> getOccSpaces()
-        {                       //helper for getPossible to just return all coordinate occupied by current tiles on board
-            Dictionary<(int, int), tileType> occupSpace = new Dictionary<(int, int), tileType>();
-            foreach (Tile t in tiles)
-            {
-                occupSpace.Add(t.getCoords(), t.getType());
-            }
-            return occupSpace;
         }
 
         private void updateBounds((int, int) xy)
@@ -134,13 +121,11 @@ namespace boardNameSpace
             }
             if (!xCap && xValues.Item2 - xValues.Item1 >= boardSize)
             {
-                // Debug.Log("Flag Worked for x");
                 xCap = true;
             }
             if (!yCap && yValues.Item2 - yValues.Item1 >= boardSize)
             {
                 yCap = true;
-                // Debug.Log("Flag Worked for y");
             }
         }
 
@@ -164,6 +149,44 @@ namespace boardNameSpace
             }
             return true;
         }
+
+        public int points()
+        {
+            Dictionary<(int, int), Tile> tempSpaceDic = occupiedSpaces;
+            ((int, int), Tile) currentTile = (tempSpaceDic.ElementAt(0).Key, tempSpaceDic.ElementAt(0).Value);
+            tempSpaceDic.Remove(currentTile.Item1);
+
+            int totalPoints = 0;
+            (int, List<(int, int)>) helperResults;
+
+            while (tempSpaceDic.Count != 0)
+            {
+                if (currentTile.Item2.getType() != tileType.King)
+                {
+                    helperResults = pointHelper(currentTile.Item2.getType(), ((0, 0), null), tempSpaceDic); //Calcs the currentTile Plus ConnectTile points, then adds to Total Points
+                    totalPoints += ((helperResults.Item1 + currentTile.Item2.getValue()) * helperResults.Item2.Count); //Calculates the total points of that streak
+
+                    // foreach ((int, int) coords in helperResults.Item2)                 //Removes Tiles that's been calc'd
+                    // {
+                    //     tempSpaceDic.Remove(coords);
+                    // }
+                }
+                if (tempSpaceDic.Count != 0)                                            //Grab next avaible tile if thers still uncalculated Tiles on the board
+                {
+                    currentTile = (tempSpaceDic.ElementAt(0).Key, tempSpaceDic.ElementAt(0).Value);
+                    tempSpaceDic.Remove(currentTile.Item1);
+                }
+            }
+
+            return totalPoints;
+        }
+        // Returns a list of Coords of tiles that are the same type and are neighbors and the corresponding total crowns(value) of that list
+        private (int, List<(int, int)>) pointHelper(tileType Type, ((int, int), Tile) currentTile, Dictionary<(int, int), Tile> tiles)
+        {
+
+            return (0, null);
+        }
+
 
     }
 }

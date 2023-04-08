@@ -1,21 +1,32 @@
 To Do: 
-Point System
-Better Materials
-King Sculpture
 
-1. Draw from deck.
-2. Instanciate the two tile blocks, one head one follow, and a tranform to move
-3. Move the tiles on whole number grid axis - Controlls
-4. "Try" to place it down
+1. Restructure IsValid Place so works well with player class??
 
+2. Create a Function in Board manager to count up the point system
+    Finished main Points method need to implement the helper
+    Helper will:
+        Be recursive - BST
+            Check for all the neighbors 
+                If same type - Remove from the tempDictionary 
+                Add all valid neigbors into a tempList
+                Add up the crown values of all the valid ^
+            If exists iterate through the tempList
+                foreach call recursion 
+                    - with the currentTile being the currentTile in the iteration
+                    - with the tempDictionary being the tempDictionary after the values were removed
+            Add up the values of the crown from the return of the iteration
+            Replace the old tempDictionary with new if the return is different
+            
+            Return the new Crown Values and tempDictionary
+            
+        Return Values:
+            Total number of crowns through the tiles that were neighbors and had the same type
+            List of ALL tiles that are the same and neighbors ^ coords version of the crown
+            tempDictionary
+        Parameters
+            Current Type of tile we are the function is adding-up/calcing
+            Current Tile We are Branching off from 
+            tempDictionary that keep tracks of all the Tile that exists but haven't been calc'd yet
 
-
-Current;
-1. Understand What BoardManager does
-2. Restructure so its that - Or some other refactor based on above's finding
-                Game GameManager
-                    /       \
-        Player Manager      Player Manager
-                |                   |
-        Board Manager           Board Manager 
 3. Write some unit tests for the board
+4. 
