@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using tileNamespace;
-using UnityEngine;
 
 namespace boardNameSpace
 {
@@ -13,8 +11,6 @@ namespace boardNameSpace
         private (int, int) yValues;
         private bool xCap;
         private bool yCap;
-        // private List<Tile> tiles = new List<Tile>();
-        // private GameObject objToSpawn;
         private int boardSize;
         private Dictionary<(int, int), Tile> occupiedSpaces;
 
@@ -79,22 +75,22 @@ namespace boardNameSpace
         {
             //Checks if any of the surrounding squares of the target of the tile is occupied and has the same type
             (int, int) tempTarget = (target.Item1 + 1, target.Item2);
-            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[target].getType() == tt)
+            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[tempTarget].getType() == tt)
             {
                 return true;
             }
             tempTarget = (target.Item1 - 1, target.Item2);
-            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[target].getType() == tt)
+            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[tempTarget].getType() == tt)
             {
                 return true;
             }
             tempTarget = (target.Item1, target.Item2 + 1);
-            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[target].getType() == tt)
+            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[tempTarget].getType() == tt)
             {
                 return true;
             }
             tempTarget = (target.Item1, target.Item2 - 1);
-            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[target].getType() == tt)
+            if (occupiedSpaces.ContainsKey(tempTarget) && occupiedSpaces[tempTarget].getType() == tt)
             {
                 return true;
             }
@@ -157,19 +153,15 @@ namespace boardNameSpace
             tempSpaceDic.Remove(currentTile.Item1);
 
             int totalPoints = 0;
-            (int, List<(int, int)>) helperResults;
+            ((int, int), Dictionary<(int, int), Tile>) helperResults;
 
             while (tempSpaceDic.Count != 0)
             {
                 if (currentTile.Item2.getType() != tileType.King)
                 {
-                    helperResults = pointHelper(currentTile.Item2.getType(), ((0, 0), null), tempSpaceDic); //Calcs the currentTile Plus ConnectTile points, then adds to Total Points
-                    totalPoints += ((helperResults.Item1 + currentTile.Item2.getValue()) * helperResults.Item2.Count); //Calculates the total points of that streak
-
-                    // foreach ((int, int) coords in helperResults.Item2)                 //Removes Tiles that's been calc'd
-                    // {
-                    //     tempSpaceDic.Remove(coords);
-                    // }
+                    helperResults = pointHelper(currentTile.Item2.getType(), currentTile, tempSpaceDic); //Calcs the currentTile Plus ConnectTile points, then adds to Total Points
+                    totalPoints += helperResults.Item1.Item1 * helperResults.Item1.Item2; //Calculates the total points of that streak
+                    tempSpaceDic = helperResults.Item2;
                 }
                 if (tempSpaceDic.Count != 0)                                            //Grab next avaible tile if thers still uncalculated Tiles on the board
                 {
@@ -177,16 +169,60 @@ namespace boardNameSpace
                     tempSpaceDic.Remove(currentTile.Item1);
                 }
             }
-
             return totalPoints;
         }
-        // Returns a list of Coords of tiles that are the same type and are neighbors and the corresponding total crowns(value) of that list
-        private (int, List<(int, int)>) pointHelper(tileType Type, ((int, int), Tile) currentTile, Dictionary<(int, int), Tile> tiles)
+
+        // Returns a the amount of crowns and tiles in a section of the board
+        private ((int, int), Dictionary<(int, int), Tile>) pointHelper(tileType tileType, ((int, int), Tile) currentTile, Dictionary<(int, int), Tile> tempDictionary)
         {
+            List<((int, int), Tile)> tempList = new List<((int, int), Tile)>();
+            int tempCrownCount = 0;
+            int tempTileCount = 0;
+            ((int, int), Dictionary<(int, int), Tile>) recursiveResult;
 
-            return (0, null);
+            (int, int) tempTarget = (currentTile.Item1.Item1 + 1, currentTile.Item1.Item2);
+            if (tempDictionary.ContainsKey(tempTarget) && tempDictionary[tempTarget].getType() == tileType)
+            {
+                tempList.Add((tempTarget, tempDictionary[tempTarget]));
+                tempCrownCount += tempDictionary[tempTarget].getValue();
+                tempTileCount += 1;
+                tempDictionary.Remove(tempTarget);
+            }
+            tempTarget = (currentTile.Item1.Item1 - 1, currentTile.Item1.Item2);
+            if (tempDictionary.ContainsKey(tempTarget) && tempDictionary[tempTarget].getType() == tileType)
+            {
+                tempCrownCount += tempDictionary[tempTarget].getValue();
+                tempTileCount += 1;
+                tempList.Add((tempTarget, tempDictionary[tempTarget]));
+                tempDictionary.Remove(tempTarget);
+            }
+            tempTarget = (currentTile.Item1.Item1, currentTile.Item1.Item2 + 1);
+            if (tempDictionary.ContainsKey(tempTarget) && tempDictionary[tempTarget].getType() == tileType)
+            {
+                tempCrownCount += tempDictionary[tempTarget].getValue();
+                tempTileCount += 1;
+                tempList.Add((tempTarget, tempDictionary[tempTarget]));
+                tempDictionary.Remove(tempTarget);
+            }
+            tempTarget = (currentTile.Item1.Item1, currentTile.Item1.Item2 + 1);
+            if (tempDictionary.ContainsKey(tempTarget) && tempDictionary[tempTarget].getType() == tileType)
+            {
+                tempCrownCount += tempDictionary[tempTarget].getValue();
+                tempTileCount += 1;
+                tempList.Add((tempTarget, tempDictionary[tempTarget]));
+                tempDictionary.Remove(tempTarget);
+            }
+            if (tempTileCount > 0)
+            {
+                foreach (((int, int), Tile) item in tempList)
+                {
+                    recursiveResult = pointHelper(tileType, item, tempDictionary);
+                    tempCrownCount += recursiveResult.Item1.Item1;
+                    tempTileCount += recursiveResult.Item1.Item2;
+                    tempDictionary = recursiveResult.Item2;
+                }
+            }
+            return ((tempCrownCount, tempTileCount), tempDictionary);
         }
-
-
     }
 }

@@ -6,10 +6,11 @@ What's Done:
 - Deck Generation
 - Deck Implemtation - Tile Namespaces/Class
 - Player
+- BoardManager Game Logic
 
 Working On:
- - BoardManager Game Logic
  - Implementing Unit Test
+ - Potential Refactor as Unit tests are implemented
 
 Need to Do:
 - Basic visuals for card points
